@@ -360,6 +360,96 @@
   margin-top: 6px;
 }
 
+/* ══ Store Hours Section ════════════════════════════════════ */
+.hours-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.hours-week-day {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 26px 8px 20px;
+  text-align: center;
+  border: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.hours-week-day:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.hours-week-day.is-today {
+  border-color: var(--accent);
+  background: rgba(204, 0, 0, 0.03);
+}
+
+.hours-week-day.is-closed {
+  opacity: 0.45;
+}
+
+.hours-today-badge {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.hours-today-inline {
+  display: none;
+}
+
+.hours-week-dayname {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.hours-week-day.is-today .hours-week-dayname {
+  color: var(--accent);
+}
+
+.hours-week-times {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.hours-week-time-range {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.hours-week-closed {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #dc2626;
+}
+
 /* ══ Responsive ═════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   .specials-grid {
@@ -369,6 +459,12 @@
   .about-snippet-inner {
     grid-template-columns: 1fr;
     gap: 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hours-week-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -395,10 +491,73 @@
   .visual-block:first-child {
     grid-column: auto;
   }
+
+  .hours-week-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin-inline: auto;
+    gap: 6px;
+  }
+
+  .hours-week-day {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 16px;
+    gap: 0;
+    text-align: left;
+  }
+
+  .hours-today-badge {
+    display: none;
+  }
+
+  .hours-today-inline {
+    display: inline;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.65rem;
+    text-transform: lowercase;
+    letter-spacing: 0;
+  }
+
+  .hours-week-dayname {
+    min-width: 44px;
+    text-align: left;
+  }
+
+  .hours-week-times {
+    flex-direction: row;
+    gap: 4px;
+    margin-top: 0;
+    margin-left: auto;
+  }
+
+  .hours-week-time-range {
+    font-size: 0.8rem;
+  }
+
+  .info-card {
+    padding: 28px 22px;
+  }
 }
 
 @media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(2.5rem, 11vw, 3.5rem);
+    letter-spacing: -1.5px;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .about-snippet-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .specials-grid {
     grid-template-columns: 1fr;
   }
 }

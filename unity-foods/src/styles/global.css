@@ -114,10 +114,12 @@ button {
 .btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: var(--accent);
   color: var(--white);
-  padding: 14px 30px;
+  padding: 12px 28px;
+  min-height: 44px;
   border-radius: var(--radius);
   font-weight: 700;
   font-size: 0.95rem;
@@ -139,10 +141,12 @@ button {
 .btn-outline {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: transparent;
   color: var(--primary);
-  padding: 12px 28px;
+  padding: 10px 26px;
+  min-height: 44px;
   border-radius: var(--radius);
   font-weight: 700;
   font-size: 0.95rem;
@@ -160,10 +164,12 @@ button {
 .btn-outline-white {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: transparent;
   color: var(--white);
-  padding: 12px 28px;
+  padding: 10px 26px;
+  min-height: 44px;
   border-radius: var(--radius);
   font-weight: 700;
   font-size: 0.95rem;
@@ -219,5 +225,15 @@ button {
 
   .section-header {
     margin-bottom: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 48px 0;
+  }
+
+  .section-header {
+    margin-bottom: 24px;
   }
 }

@@ -5,7 +5,7 @@ import ConfirmDialog from './ConfirmDialog'
 import Toast from './Toast'
 
 const blank = () => ({
-  name: '',
+  title: '',
   description: '',
   original_price: '',
   sale_price: '',
@@ -52,7 +52,7 @@ export default function SpecialsManager() {
 
   function openEdit(special) {
     setForm({
-      name: special.name ?? '',
+      title: special.title ?? '',
       description: special.description ?? '',
       original_price: special.original_price != null ? String(special.original_price) : '',
       sale_price: special.sale_price != null ? String(special.sale_price) : '',
@@ -78,7 +78,7 @@ export default function SpecialsManager() {
 
   function validate() {
     const errs = {}
-    if (!form.name.trim()) errs.name = 'Title is required.'
+    if (!form.title.trim()) errs.title = 'Title is required.'
     if (!form.sale_price) errs.sale_price = 'Sale price is required.'
     else if (isNaN(Number(form.sale_price))) errs.sale_price = 'Must be a valid number.'
     if (form.original_price && isNaN(Number(form.original_price))) errs.original_price = 'Must be a valid number.'
@@ -103,7 +103,7 @@ export default function SpecialsManager() {
       }
 
       const payload = {
-        name: form.name.trim(),
+        title: form.title.trim(),
         description: form.description.trim() || null,
         original_price: form.original_price ? Number(form.original_price) : null,
         sale_price: Number(form.sale_price),
@@ -180,12 +180,12 @@ export default function SpecialsManager() {
                   <tr key={special.id}>
                     <td>
                       {special.image_url
-                        ? <img className="adm-thumb" src={special.image_url} alt={special.name} />
+                        ? <img className="adm-thumb" src={special.image_url} alt={special.title} />
                         : <div className="adm-thumb-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
                       }
                     </td>
                     <td>
-                      <div className="adm-item-name">{special.name}</div>
+                      <div className="adm-item-name">{special.title}</div>
                       {special.description && <div className="adm-item-sub">{special.description}</div>}
                     </td>
                     <td style={{ fontWeight: 700, color: '#8B0000' }}>
@@ -235,12 +235,12 @@ export default function SpecialsManager() {
             <label htmlFor="s-name">Title <span className="req">*</span></label>
             <input
               id="s-name"
-              className={`adm-input${errors.name ? ' err' : ''}`}
-              value={form.name}
-              onChange={e => set('name', e.target.value)}
+              className={`adm-input${errors.title ? ' err' : ''}`}
+              value={form.title}
+              onChange={e => set('title', e.target.value)}
               placeholder="e.g. 2 for 1 Fountain Drinks"
             />
-            {errors.name && <span className="adm-field-err">{errors.name}</span>}
+            {errors.title && <span className="adm-field-err">{errors.title}</span>}
           </div>
 
           <div className="adm-field">

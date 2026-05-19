@@ -1,10 +1,35 @@
+import { useState, useEffect } from 'react'
+import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'
 import './Contact.css'
 
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+function fmtTime(t) {
+  if (!t) return ''
+  const [h, m] = t.split(':').map(Number)
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  const hour = h % 12 || 12
+  return `${hour}:${String(m).padStart(2, '0')} ${ampm}`
+}
+
 export default function Contact() {
+  const [hours, setHours] = useState([])
+
   const headerRef = useFadeIn()
   const infoRef = useFadeIn()
   const mapRef = useFadeIn()
+
+  useEffect(() => {
+    supabase.from('hours').select('*').order('id').then(({ data }) => {
+      if (data) setHours(data)
+    })
+  }, [])
+
+  const orderedHours = DAYS.map(d => hours.find(h => h.day === d)).filter(Boolean)
+  const allSame = orderedHours.length === 7
+    && orderedHours.every(h => !h.is_closed)
+    && orderedHours.every(h => h.open_time === orderedHours[0].open_time && h.close_time === orderedHours[0].close_time)
 
   return (
     <div className="contact-page">
@@ -60,13 +85,37 @@ export default function Contact() {
                     <polyline points="12 6 12 12 16 14"/>
                   </svg>
                 </div>
-                <div>
+                <div style={{ flex: 1 }}>
                   <h3>Hours</h3>
-                  <div className="hours-table">
-                    <span>Every Day</span>
-                    <span className="hours-time">8:00 AM – 10:00 PM</span>
-                  </div>
-                  <p className="hours-note">Open 365 days a year</p>
+                  {orderedHours.length === 0 ? (
+                    <>
+                      <div className="hours-table">
+                        <span>Every Day</span>
+                        <span className="hours-time">8:00 AM – 10:00 PM</span>
+                      </div>
+                      <p className="hours-note">Open 365 days a year</p>
+                    </>
+                  ) : allSame ? (
+                    <>
+                      <div className="hours-table">
+                        <span>Every Day</span>
+                        <span className="hours-time">
+                          {fmtTime(orderedHours[0].open_time)} – {fmtTime(orderedHours[0].close_time)}
+                        </span>
+                      </div>
+                      <p className="hours-note">Open 365 days a year</p>
+                    </>
+                  ) : (
+                    orderedHours.map(h => (
+                      <div key={h.day} className="hours-table">
+                        <span>{h.day.slice(0, 3)}</span>
+                        {h.is_closed
+                          ? <span className="hours-closed-text">Closed</span>
+                          : <span className="hours-time">{fmtTime(h.open_time)} – {fmtTime(h.close_time)}</span>
+                        }
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
 

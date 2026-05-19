@@ -4,35 +4,52 @@ import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'
 import './Home.css'
 
+const DAYS_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+function fmtTime(t) {
+  if (!t) return ''
+  const [h, m] = t.split(':').map(Number)
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  const hour = h % 12 || 12
+  return `${hour}:${String(m).padStart(2, '0')} ${ampm}`
+}
+
 export default function Home() {
   const [announcements, setAnnouncements] = useState([])
   const [specials, setSpecials] = useState([])
+  const [hours, setHours] = useState([])
 
   const heroRef = useFadeIn()
   const announcementsRef = useFadeIn()
   const specialsHeaderRef = useFadeIn()
   const specialsGridRef = useFadeIn()
   const infoRef = useFadeIn()
+  const hoursRef = useFadeIn()
   const aboutRef = useFadeIn()
 
   useEffect(() => {
     async function fetchData() {
-      const [{ data: ann }, { data: spec }] = await Promise.all([
-        supabase
-          .from('announcements')
-          .select('*')
-          .eq('active', true)
-          .order('created_at', { ascending: false }),
-        supabase
-          .from('specials')
-          .select('*')
-          .eq('active', true),
+      const [{ data: ann }, { data: spec }, { data: hrs }] = await Promise.all([
+        supabase.from('announcements').select('*').eq('active', true).order('created_at', { ascending: false }),
+        supabase.from('specials').select('*').eq('active', true),
+        supabase.from('hours').select('*').order('id'),
       ])
       if (ann) setAnnouncements(ann)
       if (spec) setSpecials(spec)
+      if (hrs) setHours(hrs)
     }
     fetchData()
   }, [])
+
+  const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' })
+  const orderedHours = DAYS_ORDER.map(d => hours.find(h => h.day === d)).filter(Boolean)
+  const displayHours = orderedHours.length === 7
+    ? orderedHours
+    : DAYS_ORDER.map(d => ({ day: d, open_time: '08:00', close_time: '22:00', is_closed: false }))
+  const allSame = orderedHours.length === 7
+    && orderedHours.every(h => !h.is_closed)
+    && orderedHours.every(h => h.open_time === orderedHours[0].open_time && h.close_time === orderedHours[0].close_time)
+  const todayRow = orderedHours.find(h => h.day === todayName)
 
   return (
     <div className="home">
@@ -56,7 +73,12 @@ export default function Home() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <circle cx="12" cy="12" r="10"/>
             </svg>
-            Open Today · 8:00 AM – 10:00 PM
+            {todayRow?.is_closed
+              ? 'Closed Today'
+              : todayRow
+                ? `Open Today · ${fmtTime(todayRow.open_time)} – ${fmtTime(todayRow.close_time)}`
+                : 'Open Today · 8:00 AM – 10:00 PM'
+            }
           </div>
         </div>
       </section>
@@ -100,13 +122,13 @@ export default function Home() {
                 <div key={special.id} className="special-card">
                   <div className="special-image">
                     {special.image_url
-                      ? <img src={special.image_url} alt={special.name} loading="lazy" />
+                      ? <img src={special.image_url} alt={special.title} loading="lazy" />
                       : <div className="img-placeholder"><PlaceholderIcon /></div>
                     }
                     <span className="sale-badge">Sale</span>
                   </div>
                   <div className="special-body">
-                    <h3>{special.name}</h3>
+                    <h3>{special.title}</h3>
                     {special.description && <p>{special.description}</p>}
                     <div className="special-pricing">
                       <span className="price-sale">${Number(special.sale_price).toFixed(2)}</span>
@@ -135,8 +157,15 @@ export default function Home() {
                 </svg>
               </div>
               <h3>Store Hours</h3>
-              <p className="info-primary">8:00 AM – 10:00 PM</p>
-              <p className="info-secondary">Open every day of the week</p>
+              <p className="info-primary">
+                {allSame
+                  ? `${fmtTime(orderedHours[0].open_time)} – ${fmtTime(orderedHours[0].close_time)}`
+                  : orderedHours.length > 0 ? 'Hours vary by day' : '8:00 AM – 10:00 PM'
+                }
+              </p>
+              <p className="info-secondary">
+                {allSame || orderedHours.length === 0 ? 'Open every day of the week' : 'See full schedule below'}
+              </p>
             </div>
 
             <div className="info-card">
@@ -168,6 +197,42 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Store Hours ── */}
+      <section className="section section-alt store-hours-section">
+        <div className="container">
+          <div className="section-header centered fade-up" ref={hoursRef}>
+            <span className="section-eyebrow">We're Open</span>
+            <h2 className="section-title">Store Hours</h2>
+            <p className="section-subtitle">
+              Come visit us any day of the week at 3759 Chicago Ave.
+            </p>
+          </div>
+          <div className="hours-week-grid">
+            {displayHours.map(h => (
+              <div
+                key={h.day}
+                className={`hours-week-day${h.day === todayName ? ' is-today' : ''}${h.is_closed ? ' is-closed' : ''}`}
+              >
+                {h.day === todayName && <span className="hours-today-badge">Today</span>}
+                <span className="hours-week-dayname">
+                  {h.day.slice(0, 3)}
+                  {h.day === todayName && <span className="hours-today-inline"> · Today</span>}
+                </span>
+                <div className="hours-week-times">
+                  {h.is_closed ? (
+                    <span className="hours-week-closed">Closed</span>
+                  ) : (
+                    <span className="hours-week-time-range">
+                      {fmtTime(h.open_time)} – {fmtTime(h.close_time)}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── About Snippet ── */}
       <section className="section section-alt about-snippet">
         <div className="container">
@@ -194,7 +259,11 @@ export default function Home() {
               </div>
               <div className="visual-block accent">
                 <div className="visual-stat">
-                  <span className="stat-number">14+</span>
+                  <span className="stat-number">
+                    {todayRow && !todayRow.is_closed && todayRow.open_time && todayRow.close_time
+                      ? `${parseInt(todayRow.close_time) - parseInt(todayRow.open_time)}+`
+                      : '14+'}
+                  </span>
                   <span className="stat-label">Hours Daily</span>
                 </div>
               </div>

@@ -1,0 +1,316 @@
+/* ══ Hero ═════════════════════════════════════════════════ */
+.repairs-hero {
+  padding: 72px 0 56px;
+  background: linear-gradient(to bottom, #1a0000, #3a0000);
+}
+
+.repairs-hero-title {
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -1px;
+  margin: 8px 0 14px;
+}
+
+.repairs-hero-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.65);
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+/* ══ Services Grid ════════════════════════════════════════ */
+.repairs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.repair-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.repair-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.repair-card-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.repair-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.repair-card:hover .repair-card-img img {
+  transform: scale(1.04);
+}
+
+.repair-card-body {
+  padding: 22px 20px 24px;
+}
+
+.repair-card-body h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+.repair-price {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(139,0,0,0.07);
+  border-radius: 6px;
+  padding: 3px 10px;
+  margin-bottom: 10px;
+}
+
+.repair-card-body p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: 8px;
+}
+
+.repairs-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* ══ Media Grid ═══════════════════════════════════════════ */
+.repair-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.repair-media-item {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.repair-media-photo {
+  cursor: pointer;
+  position: relative;
+  display: block;
+  text-align: left;
+  padding: 0;
+  border: none;
+  width: 100%;
+  background: transparent;
+}
+
+.repair-media-photo img,
+.repair-media-video video {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+
+.repair-media-video video {
+  background: #000;
+}
+
+.repair-media-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(139,0,0,0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: background 0.2s;
+}
+
+.repair-media-photo:hover .repair-media-overlay {
+  background: rgba(139,0,0,0.5);
+}
+
+.repair-media-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  margin: 0;
+  border-top: 1px solid var(--border);
+}
+
+/* ══ CTA ══════════════════════════════════════════════════ */
+.repairs-cta {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 32px;
+  align-items: center;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+
+.repairs-cta-icon {
+  width: 72px;
+  height: 72px;
+  background: rgba(139,0,0,0.08);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.repairs-cta-text .section-title {
+  margin: 4px 0 10px;
+}
+
+.repairs-cta-text p {
+  font-size: 0.925rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+.repairs-cta-action {
+  flex-shrink: 0;
+}
+
+.repairs-call-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* ══ Lightbox ═════════════════════════════════════════════ */
+.repairs-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.repairs-lb-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  z-index: 10;
+}
+
+.repairs-lb-close:hover { background: rgba(255,255,255,0.22); }
+
+.repairs-lb-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  z-index: 10;
+}
+
+.repairs-lb-nav:hover { background: rgba(255,255,255,0.22); }
+.repairs-lb-prev { left: 16px; }
+.repairs-lb-next { right: 16px; }
+
+.repairs-lb-img-wrap {
+  max-width: min(90vw, 1100px);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.repairs-lb-img-wrap img {
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.repairs-lb-caption {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.875rem;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.repairs-lb-counter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.6);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ══ Responsive ═══════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .repairs-cta {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 32px 24px;
+  }
+
+  .repairs-cta-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .repair-media-grid,
+  .repairs-grid {
+    grid-template-columns: 1fr;
+  }
+}

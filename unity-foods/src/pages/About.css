@@ -161,6 +161,91 @@
   line-height: 1.7;
 }
 
+/* ══ Hours Section ════════════════════════════════════════ */
+.about-hours-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+}
+
+.about-hours-header p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-top: 16px;
+}
+
+.about-hours-schedule {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--white);
+  box-shadow: var(--shadow-md);
+}
+
+.about-hours-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.15s;
+}
+
+.about-hours-row:last-child {
+  border-bottom: none;
+}
+
+.about-hours-row:hover {
+  background: #fafafa;
+}
+
+.about-hours-row.today {
+  background: rgba(204, 0, 0, 0.03);
+}
+
+.about-hours-row.today:hover {
+  background: rgba(204, 0, 0, 0.055);
+}
+
+.about-hours-dayname {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.about-today-tag {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 100px;
+}
+
+.about-hours-time {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.about-hours-row.today .about-hours-time {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.about-hours-closed {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #dc2626;
+}
+
 /* ══ Visit CTA ════════════════════════════════════════════ */
 .about-visit {
   display: flex;
@@ -196,6 +281,11 @@
 
   .values-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-hours-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
   }
 }
 

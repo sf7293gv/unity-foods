@@ -132,6 +132,7 @@
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
+  min-height: 44px;
   border-radius: 7px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -174,6 +175,7 @@
   gap: 10px;
   width: 100%;
   padding: 8px 10px;
+  min-height: 44px;
   border-radius: 7px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -212,9 +214,13 @@
   border: none;
   cursor: pointer;
   padding: 6px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 6px;
   color: var(--adm-text-muted);
   line-height: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .adm-topbar-menu:hover {
@@ -421,6 +427,7 @@
   align-items: center;
   gap: 6px;
   padding: 9px 16px;
+  min-height: 44px;
   border-radius: var(--adm-radius);
   font-size: 0.875rem;
   font-weight: 600;
@@ -648,8 +655,8 @@
 }
 
 .adm-modal-x {
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   border-radius: 6px;
   border: none;
   background: #f3f4f6;
@@ -725,6 +732,7 @@
 
 .adm-btn-del {
   padding: 8px 18px;
+  min-height: 44px;
   background: #dc2626;
   color: white;
   border: none;
@@ -1186,6 +1194,163 @@
 }
 
 @keyframes adm-spin { to { transform: rotate(360deg); } }
+
+/* ── Hours Editor ──────────────────────────────────────────── */
+.hours-header-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr 110px;
+  padding: 10px 20px;
+  background: #f9fafb;
+  border-bottom: 1px solid var(--adm-border);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: var(--adm-text-muted);
+}
+
+.hours-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr 110px;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.15s;
+  gap: 12px;
+}
+
+.hours-row:last-child { border-bottom: none; }
+.hours-row:hover { background: #fafafa; }
+.hours-row.is-closed { background: #fafafa; }
+
+.hours-day-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hours-day-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--adm-text);
+}
+
+.hours-closed-tag {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(220, 38, 38, 0.09);
+  color: #dc2626;
+}
+
+.hours-time-cell { display: flex; align-items: center; }
+
+.hours-time-input {
+  max-width: 130px !important;
+}
+
+.hours-time-input:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: #f9fafb;
+}
+
+.hours-toggle-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .hours-header-row { display: none; }
+
+  .hours-row {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 10px 16px;
+    padding: 14px 16px;
+  }
+
+  .hours-day-cell { grid-column: 1; grid-row: 1; }
+  .hours-toggle-cell { grid-column: 2; grid-row: 1; }
+  .hours-time-cell { grid-column: 1 / -1; }
+  .hours-time-input { max-width: 100% !important; }
+}
+
+/* ── Media grid (RepairMediaManager) ──────────────────────── */
+.adm-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.adm-media-card {
+  border-radius: var(--adm-radius);
+  border: 1px solid var(--adm-border);
+  overflow: hidden;
+  background: var(--adm-white);
+  display: flex;
+  flex-direction: column;
+}
+
+.adm-media-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #f3f4f6;
+  overflow: hidden;
+}
+
+.adm-media-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.adm-media-type-badge {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(22,163,74,0.12);
+  color: #16a34a;
+}
+
+.adm-media-type-badge.video {
+  background: rgba(139,0,0,0.12);
+  color: var(--adm-red);
+}
+
+.adm-media-desc {
+  font-size: 0.78rem;
+  color: var(--adm-text-muted);
+  padding: 8px 10px 4px;
+  margin: 0;
+  flex: 1;
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.adm-media-delete {
+  margin: 8px 10px 10px;
+  width: calc(100% - 20px);
+  justify-content: center;
+  font-size: 0.78rem !important;
+}
 
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 900px) {

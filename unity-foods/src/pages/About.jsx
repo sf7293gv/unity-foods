@@ -1,6 +1,26 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'
 import './About.css'
+
+const DAYS_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+function fmtTime(t) {
+  if (!t) return ''
+  const [h, m] = t.split(':').map(Number)
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  const hour = h % 12 || 12
+  return `${hour}:${String(m).padStart(2, '0')} ${ampm}`
+}
+
+function shortTime(t) {
+  if (!t) return ''
+  const [h, m] = t.split(':').map(Number)
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  const hour = h % 12 || 12
+  return m === 0 ? `${hour}${ampm}` : `${hour}:${String(m).padStart(2, '0')}${ampm}`
+}
 
 const VALUES = [
   {
@@ -26,11 +46,27 @@ const VALUES = [
 ]
 
 export default function About() {
+  const [hours, setHours] = useState([])
+
+  useEffect(() => {
+    supabase.from('hours').select('*').order('id').then(({ data }) => {
+      if (data) setHours(data)
+    })
+  }, [])
+
+  const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' })
+  const orderedHours = DAYS_ORDER.map(d => hours.find(h => h.day === d)).filter(Boolean)
+  const displayHours = orderedHours.length === 7
+    ? orderedHours
+    : DAYS_ORDER.map(d => ({ day: d, open_time: '08:00', close_time: '22:00', is_closed: false }))
+  const todayRow = orderedHours.find(h => h.day === todayName)
+
   const heroRef = useFadeIn()
   const storyRef = useFadeIn()
   const communityRef = useFadeIn()
   const valuesHeaderRef = useFadeIn()
   const valuesGridRef = useFadeIn()
+  const hoursRef = useFadeIn()
   const visitRef = useFadeIn()
 
   return (
@@ -69,20 +105,24 @@ export default function About() {
             <div className="story-aside">
               <div className="story-card">
                 <div className="story-stat">
-                  <span className="story-number">8AM</span>
+                  <span className="story-number">
+                    {todayRow && !todayRow.is_closed ? shortTime(todayRow.open_time) : '8AM'}
+                  </span>
                   <span className="story-label">Open every morning</span>
                 </div>
               </div>
               <div className="story-card accent">
                 <div className="story-stat">
-                  <span className="story-number">10PM</span>
+                  <span className="story-number">
+                    {todayRow && !todayRow.is_closed ? shortTime(todayRow.close_time) : '10PM'}
+                  </span>
                   <span className="story-label">Close every night</span>
                 </div>
               </div>
               <div className="story-card dark">
                 <div className="story-stat">
-                  <span className="story-number">365</span>
-                  <span className="story-label">Days a year, always open</span>
+                  <span className="story-number">7</span>
+                  <span className="story-label">Days a week, always here</span>
                 </div>
               </div>
             </div>
@@ -135,6 +175,48 @@ export default function About() {
                 <p>{value.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Store Hours ── */}
+      <section className="section about-hours-section">
+        <div className="container">
+          <div className="about-hours-inner fade-up" ref={hoursRef}>
+
+            <div className="about-hours-header">
+              <span className="section-eyebrow">We're Open</span>
+              <h2 className="section-title">Store Hours</h2>
+              <p>
+                We're here for you every day of the week — mornings, evenings, and everything in between.
+                Stop by anytime during our hours or give us a call.
+              </p>
+              <a href="tel:+16128216444" className="btn-outline" style={{ marginTop: '24px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12 19.79 19.79 0 011.62 3.38 2 2 0 013.6 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+                (612) 821-6444
+              </a>
+            </div>
+
+            <div className="about-hours-schedule">
+              {displayHours.map(h => (
+                <div
+                  key={h.day}
+                  className={`about-hours-row${h.day === todayName ? ' today' : ''}`}
+                >
+                  <span className="about-hours-dayname">
+                    {h.day}
+                    {h.day === todayName && <span className="about-today-tag">Today</span>}
+                  </span>
+                  {h.is_closed
+                    ? <span className="about-hours-closed">Closed</span>
+                    : <span className="about-hours-time">{fmtTime(h.open_time)} – {fmtTime(h.close_time)}</span>
+                  }
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>

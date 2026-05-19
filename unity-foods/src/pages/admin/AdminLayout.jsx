@@ -16,6 +16,20 @@ const NAV = [
       { to: '/admin/items',         label: 'Menu Items',     icon: <ItemsIcon /> },
       { to: '/admin/specials',      label: 'Weekly Specials',icon: <SpecialsIcon /> },
       { to: '/admin/announcements', label: 'Announcements',  icon: <BellIcon /> },
+      { to: '/admin/hours',         label: 'Store Hours',    icon: <ClockIcon /> },
+    ],
+  },
+  {
+    label: 'Shop',
+    links: [
+      { to: '/admin/shop', label: 'Shop Products', icon: <ShopIcon /> },
+    ],
+  },
+  {
+    label: 'Repairs',
+    links: [
+      { to: '/admin/repairs',       label: 'Repair Services', icon: <WrenchIcon /> },
+      { to: '/admin/repair-media',  label: 'Repair Media',    icon: <PhotoIcon /> },
     ],
   },
   {
@@ -27,11 +41,15 @@ const NAV = [
 ]
 
 const PAGE_TITLES = {
-  '/admin':               'Dashboard',
-  '/admin/items':         'Menu Items',
-  '/admin/specials':      'Weekly Specials',
-  '/admin/announcements': 'Announcements',
-  '/admin/settings':      'Settings',
+  '/admin':                'Dashboard',
+  '/admin/items':          'Menu Items',
+  '/admin/specials':       'Weekly Specials',
+  '/admin/announcements':  'Announcements',
+  '/admin/hours':          'Store Hours',
+  '/admin/shop':           'Shop Products',
+  '/admin/repairs':        'Repair Services',
+  '/admin/repair-media':   'Repair Media',
+  '/admin/settings':       'Settings',
 }
 
 export default function AdminLayout() {
@@ -167,6 +185,43 @@ function BellIcon() {
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
       <path d="M13.73 21a2 2 0 01-3.46 0"/>
+    </svg>
+  )
+}
+
+function ClockIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+  )
+}
+
+function ShopIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+  )
+}
+
+function WrenchIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+    </svg>
+  )
+}
+
+function PhotoIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="2"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <polyline points="21 15 16 10 5 21"/>
     </svg>
   )
 }

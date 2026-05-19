@@ -120,6 +120,12 @@
   margin-top: 8px;
 }
 
+.hours-closed-text {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #dc2626;
+}
+
 .contact-phone {
   display: block;
   font-size: 1.4rem;

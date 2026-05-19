@@ -1,10 +1,13 @@
-import { useEffect, useRef } from 'react'
+import { useRef, useCallback } from 'react'
 
 export function useFadeIn(options = {}) {
-  const ref = useRef(null)
+  const observerRef = useRef(null)
 
-  useEffect(() => {
-    const el = ref.current
+  const ref = useCallback((el) => {
+    if (observerRef.current) {
+      observerRef.current.disconnect()
+      observerRef.current = null
+    }
     if (!el) return
 
     const observer = new IntersectionObserver(
@@ -18,7 +21,7 @@ export function useFadeIn(options = {}) {
     )
 
     observer.observe(el)
-    return () => observer.disconnect()
+    observerRef.current = observer
   }, [])
 
   return ref
