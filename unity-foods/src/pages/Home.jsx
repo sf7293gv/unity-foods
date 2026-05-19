@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'
+import { Helmet } from 'react-helmet-async'
 import './Home.css'
 
 const DAYS_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -53,6 +54,14 @@ export default function Home() {
 
   return (
     <div className="home">
+      <Helmet>
+        <title>Unity Foods — Grocery, Deli &amp; Electronics | Minneapolis, MN</title>
+        <meta name="description" content="Your neighborhood grocery, deli, electronics, and phone repair shop in Minneapolis, MN." />
+        <meta property="og:title" content="Unity Foods — Grocery, Deli & Electronics | Minneapolis, MN" />
+        <meta property="og:description" content="Your neighborhood grocery, deli, electronics, and phone repair shop in Minneapolis, MN." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://unity-foods.vercel.app/" />
+      </Helmet>
 
       {/* ── Hero ── */}
       <section className="hero">
@@ -105,6 +114,30 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* ── Repair CTA ── */}
+      <section className="repair-cta-section">
+        <div className="container">
+          <div className="repair-cta-inner">
+            <div className="repair-cta-icon" aria-hidden="true">
+              <WrenchIcon />
+            </div>
+            <div className="repair-cta-text">
+              <h2 className="repair-cta-title">Phone broken? We fix it.</h2>
+              <p className="repair-cta-sub">
+                Fast turnaround · Fair prices · Book online in 60&nbsp;seconds
+              </p>
+            </div>
+            <Link to="/repairs#booking" className="repair-cta-btn">
+              Book a Repair Appointment
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* ── Weekly Specials ── */}
       {specials.length > 0 && (
@@ -279,6 +312,14 @@ export default function Home() {
       </section>
 
     </div>
+  )
+}
+
+function WrenchIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+    </svg>
   )
 }
 

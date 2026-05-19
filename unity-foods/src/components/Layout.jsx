@@ -2,13 +2,15 @@ import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import WhatsAppButton from './WhatsAppButton'
 
 export default function Layout() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
+    // Skip scroll-to-top when navigating to a hash anchor (e.g. /repairs#booking)
+    if (!hash) window.scrollTo(0, 0)
+  }, [pathname, hash])
 
   return (
     <>
@@ -17,6 +19,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <WhatsAppButton />
     </>
   )
 }

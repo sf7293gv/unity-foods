@@ -1,4 +1,5 @@
 import { useFadeIn } from '../hooks/useScrollAnimation'
+import { Helmet } from 'react-helmet-async'
 import './Services.css'
 
 const SERVICES = [
@@ -47,6 +48,15 @@ export default function Services() {
 
   return (
     <div className="services-page">
+      <Helmet>
+        <title>Services — Unity Foods | Minneapolis, MN</title>
+        <meta name="description" content="Services offered at Unity Foods — grocery, deli, electronics, and repairs." />
+        <meta property="og:title" content="Services — Unity Foods | Minneapolis, MN" />
+        <meta property="og:description" content="Services offered at Unity Foods — grocery, deli, electronics, and repairs." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://unity-foods.vercel.app/services" />
+      </Helmet>
+
 
       {/* ── Header ── */}
       <div className="services-header">

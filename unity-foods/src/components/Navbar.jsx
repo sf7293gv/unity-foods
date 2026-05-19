@@ -4,11 +4,10 @@ import './Navbar.css'
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
-  { to: '/menu', label: 'Menu' },
-  { to: '/shop', label: 'Shop' },
-  { to: '/services', label: 'Services' },
   { to: '/repairs', label: 'Repairs' },
-  { to: '/gallery', label: 'Gallery' },
+  { to: '/electronics', label: 'Electronics' },
+  { to: '/menu', label: 'Menu' },
+  { to: '/services', label: 'Services' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]

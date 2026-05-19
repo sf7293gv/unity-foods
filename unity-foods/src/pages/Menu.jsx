@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'
+import { Helmet } from 'react-helmet-async'
 import './Menu.css'
 
 const CATEGORIES = ['All', 'Deli', 'Hot Food', 'Groceries', 'Drinks', 'Snacks']
@@ -33,6 +34,14 @@ export default function Menu() {
 
   return (
     <div className="menu-page">
+      <Helmet>
+        <title>Menu — Unity Foods | Minneapolis, MN</title>
+        <meta name="description" content="Browse our fresh deli and grocery menu at Unity Foods in Minneapolis." />
+        <meta property="og:title" content="Menu — Unity Foods | Minneapolis, MN" />
+        <meta property="og:description" content="Browse our fresh deli and grocery menu at Unity Foods in Minneapolis." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://unity-foods.vercel.app/menu" />
+      </Helmet>
 
       {/* ── Page header ── */}
       <div className="menu-header-section">

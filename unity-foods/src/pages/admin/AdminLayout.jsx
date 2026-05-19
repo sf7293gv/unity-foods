@@ -20,9 +20,10 @@ const NAV = [
     ],
   },
   {
-    label: 'Shop',
+    label: 'Electronics',
     links: [
-      { to: '/admin/shop', label: 'Shop Products', icon: <ShopIcon /> },
+      { to: '/admin/electronics', label: 'Electronics', icon: <ShopIcon /> },
+      { to: '/admin/inquiries',   label: 'Inquiries',   icon: <InboxIcon /> },
     ],
   },
   {
@@ -30,6 +31,7 @@ const NAV = [
     links: [
       { to: '/admin/repairs',       label: 'Repair Services', icon: <WrenchIcon /> },
       { to: '/admin/repair-media',  label: 'Repair Media',    icon: <PhotoIcon /> },
+      { to: '/admin/bookings',      label: 'Bookings',        icon: <CalendarIcon /> },
     ],
   },
   {
@@ -46,9 +48,11 @@ const PAGE_TITLES = {
   '/admin/specials':       'Weekly Specials',
   '/admin/announcements':  'Announcements',
   '/admin/hours':          'Store Hours',
-  '/admin/shop':           'Shop Products',
+  '/admin/electronics':    'Electronics',
+  '/admin/inquiries':      'Inquiries',
   '/admin/repairs':        'Repair Services',
   '/admin/repair-media':   'Repair Media',
+  '/admin/bookings':       'Bookings',
   '/admin/settings':       'Settings',
 }
 
@@ -216,6 +220,15 @@ function WrenchIcon() {
   )
 }
 
+function CalendarIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+  )
+}
+
 function PhotoIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -241,6 +254,15 @@ function LogoutIcon() {
       <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
       <polyline points="16 17 21 12 16 7"/>
       <line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+  )
+}
+
+function InboxIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+      <path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/>
     </svg>
   )
 }

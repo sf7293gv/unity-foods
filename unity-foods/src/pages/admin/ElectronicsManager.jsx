@@ -27,7 +27,7 @@ const blank = () => ({
   active: true,
 })
 
-export default function ShopManager() {
+export default function ElectronicsManager() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
@@ -165,7 +165,7 @@ export default function ShopManager() {
     <div>
       <div className="adm-manager-bar">
         <div>
-          <h1>Shop Products</h1>
+          <h1>Electronics</h1>
           <p>{products.length} product{products.length !== 1 ? 's' : ''} total</p>
         </div>
         <button className="adm-btn adm-btn-primary" onClick={openAdd}>
@@ -184,7 +184,7 @@ export default function ShopManager() {
           <div className="adm-empty">
             <div className="adm-empty-icon">📱</div>
             <div className="adm-empty-title">No products yet</div>
-            <div className="adm-empty-sub">Add your first product to display it in the Shop.</div>
+            <div className="adm-empty-sub">Add your first product to display it in Electronics.</div>
           </div>
         ) : (
           <div className="adm-table-scroll">
@@ -272,9 +272,9 @@ export default function ShopManager() {
           {formError && <div className="adm-form-err">⚠ {formError}</div>}
 
           <div className="adm-field">
-            <label htmlFor="sp-name">Name <span className="req">*</span></label>
+            <label htmlFor="em-name">Name <span className="req">*</span></label>
             <input
-              id="sp-name"
+              id="em-name"
               className={`adm-input${errors.name ? ' err' : ''}`}
               value={form.name}
               onChange={e => set('name', e.target.value)}
@@ -285,9 +285,9 @@ export default function ShopManager() {
 
           <div className="adm-form-row">
             <div className="adm-field">
-              <label htmlFor="sp-price">Price ($)</label>
+              <label htmlFor="em-price">Price ($)</label>
               <input
-                id="sp-price"
+                id="em-price"
                 type="number"
                 step="0.01"
                 min="0"
@@ -299,9 +299,9 @@ export default function ShopManager() {
               {errors.price && <span className="adm-field-err">{errors.price}</span>}
             </div>
             <div className="adm-field">
-              <label htmlFor="sp-cat">Category</label>
+              <label htmlFor="em-cat">Category</label>
               <select
-                id="sp-cat"
+                id="em-cat"
                 className="adm-select"
                 value={form.category}
                 onChange={e => set('category', e.target.value)}
@@ -314,9 +314,9 @@ export default function ShopManager() {
           </div>
 
           <div className="adm-field">
-            <label htmlFor="sp-condition">Condition</label>
+            <label htmlFor="em-condition">Condition</label>
             <select
-              id="sp-condition"
+              id="em-condition"
               className="adm-select"
               value={form.condition}
               onChange={e => set('condition', e.target.value)}
@@ -328,9 +328,9 @@ export default function ShopManager() {
           </div>
 
           <div className="adm-field">
-            <label htmlFor="sp-desc">Description</label>
+            <label htmlFor="em-desc">Description</label>
             <textarea
-              id="sp-desc"
+              id="em-desc"
               className="adm-textarea"
               value={form.description}
               onChange={e => set('description', e.target.value)}
@@ -390,7 +390,7 @@ export default function ShopManager() {
           <div className="adm-toggle-row">
             <div className="adm-toggle-text">
               <strong>Active</strong>
-              <span>Show this product in the Shop</span>
+              <span>Show this product in Electronics</span>
             </div>
             <label className="adm-switch">
               <input type="checkbox" checked={form.active} onChange={e => set('active', e.target.checked)} />
@@ -405,7 +405,7 @@ export default function ShopManager() {
         onCancel={() => setConfirmId(null)}
         onConfirm={handleDelete}
         title="Delete this product?"
-        message="This will permanently remove the product from your shop. This action cannot be undone."
+        message="This will permanently remove the product from Electronics. This action cannot be undone."
       />
 
       <Toast toast={toast} />

@@ -1352,10 +1352,152 @@
   font-size: 0.78rem !important;
 }
 
+/* ── Dashboard ─────────────────────────────────────────────── */
+
+/* 7-card stat grid: 4 cols on desktop */
+.dash-stats {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Pending-bookings card glows red when count > 0 */
+.adm-stat.dash-stat-alert {
+  border-color: rgba(220, 38, 38, 0.3);
+  background: rgba(220, 38, 38, 0.03);
+}
+
+.dash-alert-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #dc2626;
+  margin-left: 6px;
+  vertical-align: middle;
+  animation: dash-dot-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes dash-dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* Lower two-column layout */
+.dash-lower {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 18px;
+  align-items: start;
+}
+
+/* Panel header row (title + optional link) */
+.dash-panel-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--adm-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.dash-view-all {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--adm-red);
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: opacity 0.15s;
+}
+.dash-view-all:hover { opacity: 0.75; }
+
+/* Recent bookings list */
+.dash-booking-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-booking-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.dash-booking-row:last-child { border-bottom: none; }
+
+.dash-booking-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dash-booking-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--adm-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-booking-svc {
+  font-size: 0.78rem;
+  color: var(--adm-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-booking-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.dash-booking-time {
+  font-size: 0.75rem;
+  color: var(--adm-text-muted);
+  white-space: nowrap;
+}
+
+/* Empty state inside panel */
+.dash-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 32px 0;
+  color: var(--adm-text-muted);
+  font-size: 0.875rem;
+}
+
+.dash-empty svg { opacity: 0.35; }
+
+/* Quick-actions list (replaces shortcut-grid in sidebar panel) */
+.dash-shortcuts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dash-shortcuts-list .adm-shortcut {
+  padding: 11px 14px;
+}
+
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .adm-stats { grid-template-columns: repeat(2, 1fr); }
+  .dash-stats { grid-template-columns: repeat(2, 1fr); }
   .adm-shortcut-grid { grid-template-columns: 1fr; }
+  .dash-lower { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -1379,7 +1521,8 @@
   .adm-topbar-menu { display: flex; }
   .adm-user-email { display: none; }
   .adm-content { padding: 20px 16px; }
-  .adm-stats { grid-template-columns: 1fr; }
+  .adm-stats,
+  .dash-stats { grid-template-columns: 1fr; }
   .adm-form-row { grid-template-columns: 1fr; }
 }
 

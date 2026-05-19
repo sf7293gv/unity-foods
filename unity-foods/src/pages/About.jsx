@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'
+import { Helmet } from 'react-helmet-async'
 import './About.css'
 
 const DAYS_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -71,6 +72,14 @@ export default function About() {
 
   return (
     <div className="about-page">
+      <Helmet>
+        <title>About Us — Unity Foods | Minneapolis, MN</title>
+        <meta name="description" content="Learn about Unity Foods — a community store in Minneapolis, MN." />
+        <meta property="og:title" content="About Us — Unity Foods | Minneapolis, MN" />
+        <meta property="og:description" content="Learn about Unity Foods — a community store in Minneapolis, MN." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://unity-foods.vercel.app/about" />
+      </Helmet>
 
       {/* ── Hero ── */}
       <div className="about-hero">

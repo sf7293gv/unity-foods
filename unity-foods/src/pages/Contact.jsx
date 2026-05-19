@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'
+import { Helmet } from 'react-helmet-async'
 import './Contact.css'
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -33,6 +34,14 @@ export default function Contact() {
 
   return (
     <div className="contact-page">
+      <Helmet>
+        <title>Contact — Unity Foods | Minneapolis, MN</title>
+        <meta name="description" content="Contact Unity Foods — located at 3759 Chicago Ave, Minneapolis, MN. Call, visit, or send a message." />
+        <meta property="og:title" content="Contact — Unity Foods | Minneapolis, MN" />
+        <meta property="og:description" content="Contact Unity Foods — located at 3759 Chicago Ave, Minneapolis, MN. Call, visit, or send a message." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://unity-foods.vercel.app/contact" />
+      </Helmet>
 
       {/* ── Header ── */}
       <div className="contact-header">
