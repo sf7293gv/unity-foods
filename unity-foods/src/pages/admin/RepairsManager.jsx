@@ -52,7 +52,7 @@ export default function RepairsManager() {
   function openEdit(svc) {
     setForm({
       name: svc.name ?? '',
-      price: svc.price ?? '',
+      price: svc.price != null ? String(svc.price) : '',
       description: svc.description ?? '',
       imageUrl: svc.image_url ?? '',
       imageFile: null,

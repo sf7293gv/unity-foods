@@ -23,17 +23,12 @@ function getTimeSlotsForDate(dateStr, hours) {
   const [y, mo, d] = dateStr.split('-').map(Number)
   const dayName = JS_DAY_NAMES[new Date(y, mo - 1, d).getDay()]
   const dayRow = hours.find(h => h.day === dayName)
-  if (!dayRow || dayRow.is_closed || !dayRow.open_time || !dayRow.close_time) return []
-  const [openH, openM] = dayRow.open_time.split(':').map(Number)
-  const [closeH, closeM] = dayRow.close_time.split(':').map(Number)
-  let mins = openH * 60 + openM
-  const endMins = closeH * 60 + closeM - 60 // last slot 1 hour before close
+  if (!dayRow || dayRow.is_closed) return []
   const slots = []
-  while (mins <= endMins) {
+  for (let mins = 13 * 60; mins <= 21 * 60 + 45; mins += 15) {
     const h = Math.floor(mins / 60)
     const m = mins % 60
     slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`)
-    mins += 30
   }
   return slots
 }
@@ -150,7 +145,9 @@ export default function Repairs() {
                   )}
                   <div className="repair-card-body">
                     <h3>{svc.name}</h3>
-                    {svc.price && <span className="repair-price">{svc.price}</span>}
+                    <span className="repair-price">
+                      {svc.price != null && svc.price !== '' ? svc.price : 'Call for Quote'}
+                    </span>
                     {svc.description && <p>{svc.description}</p>}
                   </div>
                 </div>
@@ -325,7 +322,6 @@ function BookingForm({ services, hours, ownerPhone }) {
 
   function validate() {
     const e = {}
-    if (!form.serviceId) e.serviceId = 'Please select a service'
     if (!form.date) e.date = 'Please select a date'
     else if (dayIsClosed) e.date = `We're closed on ${dayName}s — please pick another day`
     if (!form.time) e.time = 'Please select a time'
@@ -344,7 +340,7 @@ function BookingForm({ services, hours, ownerPhone }) {
 
     const { error } = await supabase.from('bookings').insert({
       service_id:    form.serviceId || null,
-      service_name:  form.serviceName,
+      service_name:  form.serviceName || 'Not specified',
       customer_name: form.name.trim(),
       customer_phone: form.phone.trim(),
       booking_date:  form.date,
@@ -446,7 +442,7 @@ function BookingForm({ services, hours, ownerPhone }) {
         {/* Service */}
         <div className="booking-field booking-field-full">
           <label htmlFor="bf-service">
-            Repair service <span className="booking-req">*</span>
+            Repair service <span className="booking-optional">(optional)</span>
           </label>
           {services.length === 0 ? (
             <p className="booking-no-services">

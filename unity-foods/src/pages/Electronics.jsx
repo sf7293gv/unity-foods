@@ -149,9 +149,9 @@ function ProductCard({ product, onInquire }) {
         {product.description && (
           <p className="product-description">{product.description}</p>
         )}
-        {product.price != null && (
-          <p className="product-price">${Number(product.price).toFixed(2)}</p>
-        )}
+        <p className="product-price">
+          {product.price != null ? `$${Number(product.price).toFixed(2)}` : 'Call for Quote'}
+        </p>
         <button
           className="product-inquire-btn"
           onClick={() => onInquire(product)}
