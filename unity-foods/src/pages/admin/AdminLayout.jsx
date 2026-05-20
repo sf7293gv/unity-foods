@@ -27,6 +27,12 @@ const NAV = [
     ],
   },
   {
+    label: 'Tobacco',
+    links: [
+      { to: '/admin/tobacco', label: 'Tobacco', icon: <TobaccoIcon /> },
+    ],
+  },
+  {
     label: 'Repairs',
     links: [
       { to: '/admin/repairs',       label: 'Repair Services', icon: <WrenchIcon /> },
@@ -50,6 +56,7 @@ const PAGE_TITLES = {
   '/admin/hours':          'Store Hours',
   '/admin/electronics':    'Electronics',
   '/admin/inquiries':      'Inquiries',
+  '/admin/tobacco':        'Tobacco',
   '/admin/repairs':        'Repair Services',
   '/admin/repair-media':   'Repair Media',
   '/admin/bookings':       'Bookings',
@@ -254,6 +261,17 @@ function LogoutIcon() {
       <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
       <polyline points="16 17 21 12 16 7"/>
       <line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+  )
+}
+
+function TobaccoIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
+      <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+      <line x1="12" y1="22.08" x2="12" y2="12"/>
     </svg>
   )
 }

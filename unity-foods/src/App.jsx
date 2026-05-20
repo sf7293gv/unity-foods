@@ -9,6 +9,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Repairs from './pages/Repairs'
 import Electronics from './pages/Electronics'
+import Tobacco from './pages/Tobacco'
 import NotFound from './pages/NotFound'
 
 import AdminLogin from './pages/admin/AdminLogin'
@@ -24,6 +25,7 @@ import RepairsManager from './pages/admin/RepairsManager'
 import RepairMediaManager from './pages/admin/RepairMediaManager'
 import BookingsManager from './pages/admin/BookingsManager'
 import AdminSettings from './pages/admin/AdminSettings'
+import TobaccoManager from './pages/admin/TobaccoManager'
 
 export default function App() {
   return (
@@ -39,6 +41,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/repairs" element={<Repairs />} />
           <Route path="/electronics" element={<Electronics />} />
+          <Route path="/tobacco" element={<Tobacco />} />
         </Route>
 
         {/* Admin login (no auth required) */}
@@ -63,6 +66,7 @@ export default function App() {
           <Route path="repairs" element={<RepairsManager />} />
           <Route path="repair-media" element={<RepairMediaManager />} />
           <Route path="bookings" element={<BookingsManager />} />
+          <Route path="tobacco" element={<TobaccoManager />} />
           <Route path="settings" element={<AdminSettings />} />
         </Route>
 
