@@ -60,10 +60,7 @@ Deno.serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // ⚠ Update this once you verify a domain in Resend:
-        //   from: 'Unity Foods <bookings@yourdomain.com>'
-        // Until then, onboarding@resend.dev only delivers to your Resend account email.
-        from: 'Unity Foods <onboarding@resend.dev>',
+        from: 'Unity Foods <bookings@unityfoodsmn.com>',
         to: [ownerEmail],
         subject: `New Repair Booking — ${customer_name}`,
         html: buildEmail({ customer_name, customer_phone, service_name, dateDisplay, timeDisplay, notes }),
