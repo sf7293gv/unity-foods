@@ -13,6 +13,8 @@ Deno.serve(async (req) => {
   try {
     const { product_name, customer_name, customer_phone, message } = await req.json()
 
+    console.log('[notify-inquiry] Received payload — customer:', customer_name, '| product:', product_name)
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
@@ -47,6 +49,10 @@ Deno.serve(async (req) => {
       )
     }
 
+    const fromField = 'Unity Foods <bookings@unityfoodsmn.com>'
+    const subjectField = `New Product Inquiry — ${customer_name}`
+    console.log('[notify-inquiry] Sending email — from:', fromField, '| to:', ownerEmail, '| subject:', subjectField)
+
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -54,9 +60,9 @@ Deno.serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Unity Foods <bookings@unityfoodsmn.com>',
+        from: fromField,
         to: [ownerEmail],
-        subject: `New Product Inquiry — ${customer_name}`,
+        subject: subjectField,
         html: buildEmail({ product_name, customer_name, customer_phone, message }),
       }),
     })
@@ -68,8 +74,11 @@ Deno.serve(async (req) => {
       resendBody = await resendRes.text()
     }
 
+    console.log('[notify-inquiry] Resend HTTP status:', resendRes.status)
+    console.log('[notify-inquiry] Resend response body:', JSON.stringify(resendBody))
+
     if (!resendRes.ok) {
-      console.error(`[notify-inquiry] Resend ${resendRes.status}:`, JSON.stringify(resendBody))
+      console.error(`[notify-inquiry] Resend error ${resendRes.status}:`, JSON.stringify(resendBody))
       return new Response(
         JSON.stringify({ error: 'Email send failed', status: resendRes.status, detail: resendBody }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

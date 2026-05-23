@@ -1,3 +1,4 @@
+// Inquiries manager — read/delete product inquiries submitted from the Electronics page.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import ConfirmDialog from './ConfirmDialog'

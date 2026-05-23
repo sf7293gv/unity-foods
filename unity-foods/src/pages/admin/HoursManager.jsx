@@ -1,3 +1,5 @@
+// Store hours CRUD — one row per day of the week. On save, rows without an id are inserted
+// and rows with an id are updated. Times are nulled out for closed days.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import Toast from './Toast'

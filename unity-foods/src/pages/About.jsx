@@ -1,3 +1,4 @@
+// About page — static brand story content plus live store hours fetched from Supabase.
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'

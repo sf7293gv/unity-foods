@@ -1,3 +1,5 @@
+// Admin settings — upserts key/value rows in the settings table (owner_phone, owner_email,
+// social URLs, password change). Upsert with onConflict:'key' creates the row on first save.
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'

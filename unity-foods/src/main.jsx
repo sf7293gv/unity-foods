@@ -1,3 +1,4 @@
+// Entry point — mounts the React app with HelmetProvider for per-page SEO meta tags.
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'

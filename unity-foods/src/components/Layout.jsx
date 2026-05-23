@@ -1,3 +1,4 @@
+// Shared shell for all public pages — Navbar, page content, Footer, and floating widgets.
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'

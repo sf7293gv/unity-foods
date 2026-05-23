@@ -1,3 +1,5 @@
+// Contact page — displays address, phone, and live store hours fetched from Supabase,
+// plus an embedded Google Maps iframe.
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'

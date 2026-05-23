@@ -1,3 +1,5 @@
+// Floating WhatsApp button — phone number fetched from the settings table so it can be updated
+// in the admin panel without a redeploy. Non-digit characters are stripped for the wa.me URL.
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import './WhatsAppButton.css'
@@ -14,6 +16,7 @@ export default function WhatsAppButton() {
       .eq('key', 'owner_phone')
       .maybeSingle()
       .then(({ data }) => {
+        // Strip non-digits so the wa.me URL only contains numbers
         if (data?.value) setPhone(data.value.replace(/\D/g, ''))
       })
   }, [])

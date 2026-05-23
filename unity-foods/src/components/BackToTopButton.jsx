@@ -1,3 +1,5 @@
+// Floating "back to top" button — always rendered so the CSS opacity/transform transition works;
+// visibility is controlled by a CSS class rather than conditional rendering.
 import { useState, useEffect } from 'react'
 import './BackToTopButton.css'
 

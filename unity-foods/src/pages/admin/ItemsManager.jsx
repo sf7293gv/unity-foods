@@ -1,3 +1,5 @@
+// Menu items CRUD — create/edit/delete items with name, category, price, description, and image upload.
+// Image is uploaded to the images Storage bucket; the public URL is stored in the DB row.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminModal from './AdminModal'

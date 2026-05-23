@@ -1,3 +1,4 @@
+// 404 page — catch-all route; noindex so search engines don't index the error page.
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import './NotFound.css'

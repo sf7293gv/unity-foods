@@ -1,3 +1,4 @@
+// Announcements CRUD — create/edit/delete site-wide announcements shown on the Home page.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminModal from './AdminModal'

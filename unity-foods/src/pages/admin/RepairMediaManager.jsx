@@ -1,3 +1,5 @@
+// Repair media CRUD — upload before/after photos to the images Storage bucket.
+// On delete, the storage path is parsed from the public URL so the file is removed from the bucket too.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import ConfirmDialog from './ConfirmDialog'

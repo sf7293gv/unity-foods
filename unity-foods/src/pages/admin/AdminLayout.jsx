@@ -1,3 +1,5 @@
+// Admin shell — responsive sidebar navigation, mobile hamburger overlay, and top bar with logged-in user.
+// Sidebar closes automatically on route change (mobile UX).
 import { useState, useEffect } from 'react'
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'

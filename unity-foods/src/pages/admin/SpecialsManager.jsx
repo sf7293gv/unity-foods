@@ -1,3 +1,4 @@
+// Weekly specials CRUD — create/edit/delete specials with title, sale price, original price, image, and active toggle.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminModal from './AdminModal'

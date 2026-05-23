@@ -1,3 +1,4 @@
+// Services overview page — static content listing all service categories offered by Unity Foods.
 import { useFadeIn } from '../hooks/useScrollAnimation'
 import { Helmet } from 'react-helmet-async'
 import './Services.css'

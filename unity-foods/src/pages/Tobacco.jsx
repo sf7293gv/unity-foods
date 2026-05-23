@@ -1,3 +1,5 @@
+// Tobacco page — fetches products from the tobacco_products table and renders a simple image grid.
+// No prices, no filters, no inquiry modal — display only.
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'

@@ -1,3 +1,4 @@
+// Repair services CRUD — create/edit/delete services with name, optional price, description, and active toggle.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminModal from './AdminModal'

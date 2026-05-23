@@ -1,3 +1,4 @@
+// Bookings manager — read/update/delete repair appointment bookings; supports status changes (pending/confirmed/cancelled).
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import Toast from './Toast'

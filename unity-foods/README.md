@@ -1,8 +1,8 @@
 # Unity Foods
 
-Website for **Unity Foods** — a neighborhood grocery, deli, electronics, and phone repair shop located at 3759 Chicago Ave #2, Minneapolis, MN 55407 (George Floyd Square, Powderhorn neighborhood).
+**Unity Foods** is a neighborhood grocery store, deli, electronics shop, and phone repair center located at 3759 Chicago Ave #2, Minneapolis, MN 55407 — in the heart of the Powderhorn community at George Floyd Square.
 
-Live site: [unity-foods.vercel.app](https://unity-foods.vercel.app)
+**Live site:** [unityfoodsmn.com](https://unityfoodsmn.com)
 
 ---
 
@@ -12,12 +12,13 @@ Live site: [unity-foods.vercel.app](https://unity-foods.vercel.app)
 |---|---|
 | Frontend | React 19 + Vite 8 |
 | Routing | React Router v7 |
+| Styling | Tailwind CSS + custom CSS |
 | Backend / Database | Supabase (Postgres + RLS) |
 | Auth | Supabase Auth (email + password) |
 | File storage | Supabase Storage (`images` bucket) |
-| Email notifications | Supabase Edge Functions + Resend |
+| Email notifications | Supabase Edge Functions (Deno) + Resend |
 | SEO | react-helmet-async |
-| Deployment | Vercel |
+| Deployment | Vercel + custom domain |
 
 ---
 
@@ -27,143 +28,47 @@ Live site: [unity-foods.vercel.app](https://unity-foods.vercel.app)
 
 | Route | Description |
 |---|---|
-| `/` | Home — hero, announcements, weekly specials, repair CTA band, store hours, about snippet |
+| `/` | Home — hero, live announcements, weekly specials, repair CTA, store hours, about snippet |
 | `/menu` | Deli & grocery menu with category filters |
 | `/electronics` | Product grid with category/condition filters and product inquiry modal |
-| `/repairs` | Repair services, media gallery, online booking form |
-| `/services` | Overview of all store services |
-| `/about` | Store story and community background |
-| `/contact` | Contact form, address, phone, map link, hours |
-| `*` | Custom 404 page |
+| `/tobacco` | Tobacco products display grid (no prices, display only) |
+| `/repairs` | Repair services list, before/after media gallery, online booking form |
+| `/services` | Overview of all store service categories |
+| `/about` | Store story and community background with live hours |
+| `/contact` | Address, phone, embedded map, and live store hours |
+| `*` | Custom branded 404 page |
 
 ### Admin panel (`/admin`)
 
-All admin routes are protected by a Supabase session guard. Unauthenticated users are redirected to `/admin/login`.
+All admin routes are protected — unauthenticated users are redirected to `/admin/login`.
 
 | Route | Description |
 |---|---|
-| `/admin` | Dashboard — stat cards, recent bookings, quick actions |
+| `/admin` | Dashboard — stat cards and quick-action links |
 | `/admin/items` | Menu items CRUD (name, price, category, image, active toggle) |
 | `/admin/specials` | Weekly specials CRUD (sale price, original price, image) |
-| `/admin/announcements` | Live site-wide announcements CRUD |
-| `/admin/hours` | Store hours per day of week |
-| `/admin/electronics` | Electronics / phone products CRUD |
-| `/admin/inquiries` | Product inquiries — mark read, delete |
-| `/admin/repairs` | Repair services CRUD |
-| `/admin/repair-media` | Repair gallery image uploads |
-| `/admin/bookings` | Repair bookings — status updates (pending/confirmed/cancelled) |
-| `/admin/settings` | Owner phone, notification email, social media links |
+| `/admin/announcements` | Site-wide announcements CRUD |
+| `/admin/hours` | Store hours per day of week (open/close times, closed toggle) |
+| `/admin/electronics` | Electronics products CRUD (price optional — shows "Call for Quote" if blank) |
+| `/admin/tobacco` | Tobacco products CRUD (name and image only) |
+| `/admin/inquiries` | Product inquiries from the Electronics page — view and delete |
+| `/admin/repairs` | Repair services CRUD (price optional — shows "Call for Quote" if blank) |
+| `/admin/repair-media` | Before/after repair photo gallery uploads |
+| `/admin/bookings` | Repair bookings — status updates (pending / confirmed / cancelled) |
+| `/admin/settings` | Owner phone, notification email, social media URLs, password change |
 
-### Global UI components
+### Other features
 
-- Navbar with mobile hamburger menu
-- Footer with address, hours, nav links, and social media icons (fetched live from settings)
-- Floating WhatsApp button (phone number fetched from settings)
-- Back-to-top button (appears after 300 px scroll, sits above WhatsApp button)
-- Custom branded 404 page
-
----
-
-## Project structure
-
-```
-unity-foods/
-├── public/
-│   ├── favicon.svg
-│   └── icons.svg
-├── src/
-│   ├── components/
-│   │   ├── BackToTopButton.jsx / .css
-│   │   ├── Footer.jsx / .css
-│   │   ├── Layout.jsx
-│   │   ├── Navbar.jsx / .css
-│   │   ├── ProtectedRoute.jsx
-│   │   └── WhatsAppButton.jsx / .css
-│   ├── hooks/
-│   │   └── useScrollAnimation.js
-│   ├── lib/
-│   │   └── supabase.js           ← Supabase client (reads VITE_ env vars)
-│   ├── pages/
-│   │   ├── admin/
-│   │   │   ├── AdminLayout.jsx
-│   │   │   ├── AdminLogin.jsx
-│   │   │   ├── AdminModal.jsx
-│   │   │   ├── AdminSettings.jsx
-│   │   │   ├── AnnouncementsManager.jsx
-│   │   │   ├── BookingsManager.jsx
-│   │   │   ├── ConfirmDialog.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── ElectronicsManager.jsx
-│   │   │   ├── HoursManager.jsx
-│   │   │   ├── InquiriesManager.jsx
-│   │   │   ├── ItemsManager.jsx
-│   │   │   ├── RepairMediaManager.jsx
-│   │   │   ├── RepairsManager.jsx
-│   │   │   ├── SpecialsManager.jsx
-│   │   │   └── Toast.jsx
-│   │   ├── About.jsx / .css
-│   │   ├── Contact.jsx / .css
-│   │   ├── Electronics.jsx / .css
-│   │   ├── Home.jsx / .css
-│   │   ├── Menu.jsx / .css
-│   │   ├── NotFound.jsx / .css
-│   │   ├── Repairs.jsx / .css
-│   │   └── Services.jsx / .css
-│   ├── styles/
-│   │   ├── admin.css             ← admin design-system styles
-│   │   └── global.css            ← CSS custom properties, resets, utilities
-│   ├── App.jsx
-│   └── main.jsx
-├── supabase/
-│   └── functions/
-│       ├── notify-booking/       ← Edge Function: email on new repair booking
-│       │   └── index.ts
-│       └── notify-inquiry/       ← Edge Function: email on new product inquiry
-│           └── index.ts
-├── index.html
-├── package.json
-├── vercel.json
-└── vite.config.js
-```
+- **Booking system** — customers select a date and time slot (1:00 PM–9:45 PM, 15-min intervals) and submit a repair appointment; closed days are blocked automatically
+- **Email notifications** — Supabase Edge Functions send formatted HTML emails via Resend when a booking or product inquiry is submitted
+- **Image uploads** — product, special, repair, and tobacco images uploaded directly to Supabase Storage
+- **WhatsApp button** — floating button with phone number fetched live from the settings table
+- **SEO** — per-page `<title>` and `<meta>` tags via react-helmet-async
+- **Mobile responsive** — fully responsive layout across all pages and the admin panel
 
 ---
 
-## Local development
-
-### 1. Clone and install
-
-```bash
-git clone <your-repo-url>
-cd unity-foods
-npm install
-```
-
-### 2. Environment variables
-
-Create a `.env` file in the project root (this file is gitignored — never commit it):
-
-```env
-VITE_SUPABASE_URL=https://your-project-ref.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-public-key
-```
-
-Both values are in your Supabase project under **Settings → API**.
-
-### 3. Start the dev server
-
-```bash
-npm run dev
-```
-
-The site runs at `http://localhost:5173` by default.
-
----
-
-## Supabase setup
-
-### Tables
-
-Run the following SQL in the Supabase SQL editor.
+## Supabase tables
 
 ```sql
 -- Menu items
@@ -198,7 +103,7 @@ create table announcements (
   created_at timestamptz default now()
 );
 
--- Store hours (one row per day)
+-- Store hours (one row per day of the week)
 create table hours (
   id         uuid primary key default gen_random_uuid(),
   day        text not null unique,
@@ -231,6 +136,14 @@ create table inquiries (
   message        text,
   status         text not null default 'new' check (status in ('new', 'read')),
   created_at     timestamptz default now()
+);
+
+-- Tobacco products
+create table tobacco_products (
+  id         uuid primary key default gen_random_uuid(),
+  name       text not null,
+  image_url  text,
+  created_at timestamptz default now()
 );
 
 -- Repair services
@@ -267,7 +180,7 @@ create table bookings (
   created_at     timestamptz default now()
 );
 
--- Key-value settings (phone, email, social links)
+-- Key-value settings (phone, notification email, social links)
 create table settings (
   key   text primary key,
   value text
@@ -276,38 +189,40 @@ create table settings (
 
 ### Row Level Security
 
-Enable RLS on every table, then add policies:
-
 ```sql
--- Public-read tables (customers can browse without logging in)
-alter table items           enable row level security;
-alter table specials        enable row level security;
-alter table announcements   enable row level security;
-alter table hours           enable row level security;
-alter table products        enable row level security;
-alter table repair_services enable row level security;
-alter table repair_media    enable row level security;
+-- Public-read tables
+alter table items             enable row level security;
+alter table specials          enable row level security;
+alter table announcements     enable row level security;
+alter table hours             enable row level security;
+alter table products          enable row level security;
+alter table tobacco_products  enable row level security;
+alter table repair_services   enable row level security;
+alter table repair_media      enable row level security;
 
-create policy "Public read"  on items           for select to anon using (true);
-create policy "Admin all"    on items           for all    to authenticated using (true);
+create policy "Public read" on items            for select to anon using (true);
+create policy "Admin all"   on items            for all    to authenticated using (true);
 
-create policy "Public read"  on specials        for select to anon using (true);
-create policy "Admin all"    on specials        for all    to authenticated using (true);
+create policy "Public read" on specials         for select to anon using (true);
+create policy "Admin all"   on specials         for all    to authenticated using (true);
 
-create policy "Public read"  on announcements   for select to anon using (true);
-create policy "Admin all"    on announcements   for all    to authenticated using (true);
+create policy "Public read" on announcements    for select to anon using (true);
+create policy "Admin all"   on announcements    for all    to authenticated using (true);
 
-create policy "Public read"  on hours           for select to anon using (true);
-create policy "Admin all"    on hours           for all    to authenticated using (true);
+create policy "Public read" on hours            for select to anon using (true);
+create policy "Admin all"   on hours            for all    to authenticated using (true);
 
-create policy "Public read"  on products        for select to anon using (true);
-create policy "Admin all"    on products        for all    to authenticated using (true);
+create policy "Public read" on products         for select to anon using (true);
+create policy "Admin all"   on products         for all    to authenticated using (true);
 
-create policy "Public read"  on repair_services for select to anon using (true);
-create policy "Admin all"    on repair_services for all    to authenticated using (true);
+create policy "Public read" on tobacco_products for select to anon using (true);
+create policy "Admin all"   on tobacco_products for all    to authenticated using (true);
 
-create policy "Public read"  on repair_media    for select to anon using (true);
-create policy "Admin all"    on repair_media    for all    to authenticated using (true);
+create policy "Public read" on repair_services  for select to anon using (true);
+create policy "Admin all"   on repair_services  for all    to authenticated using (true);
+
+create policy "Public read" on repair_media     for select to anon using (true);
+create policy "Admin all"   on repair_media     for all    to authenticated using (true);
 
 -- Bookings: customers insert, admin manages
 alter table bookings enable row level security;
@@ -319,95 +234,67 @@ alter table inquiries enable row level security;
 create policy "Public insert" on inquiries for insert to anon          with check (true);
 create policy "Admin all"     on inquiries for all    to authenticated using (true);
 
--- Settings: public read (WhatsApp number, social links shown to all), admin write
+-- Settings: public read (WhatsApp number, social links), admin write
 alter table settings enable row level security;
 create policy "Public read" on settings for select to anon          using (true);
 create policy "Admin all"   on settings for all    to authenticated using (true);
 ```
 
-### Settings seed data
-
-```sql
-insert into settings (key, value) values
-  ('owner_phone',   '16128216444'),
-  ('owner_email',   'owner@example.com'),
-  ('facebook_url',  'https://facebook.com/unityfoodsmpls'),
-  ('instagram_url', 'https://instagram.com/unityfoodsmpls'),
-  ('tiktok_url',    'https://tiktok.com/@unityfoodsmpls')
-on conflict (key) do nothing;
-```
-
-Update real values from the admin panel at `/admin/settings`.
-
 ### Storage bucket
 
-Create a **public** bucket named `images` for product, special, and repair media uploads:
+Create a **public** bucket named `images` in Supabase Storage for all product, special, repair, and tobacco image uploads.
 
 > Supabase Dashboard → Storage → New bucket → Name: `images` → Public: ✓
 
 ---
 
-## Email notifications
+## Environment variables
 
-Two Supabase Edge Functions (Deno runtime) send email via [Resend](https://resend.com):
+Create a `.env` file in the project root. This file is gitignored — **never commit it**.
 
-| Function | Trigger |
-|---|---|
-| `notify-booking` | Customer submits a repair booking on `/repairs` |
-| `notify-inquiry` | Customer submits a product inquiry on `/electronics` |
-
-### Deploy functions
-
-```bash
-npx supabase functions deploy notify-booking --project-ref <your-ref>
-npx supabase functions deploy notify-inquiry --project-ref <your-ref>
+```env
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-public-key
 ```
 
-### Set the API key secret
+Both values are found in your Supabase project under **Settings → API**.
 
-```bash
-npx supabase secrets set RESEND_API_KEY=re_xxxxxxxxxxxx --project-ref <your-ref>
-```
-
-### Sender domain note
-
-Both functions currently use `from: 'Unity Foods <onboarding@resend.dev>'`, which only delivers to the email address registered with your Resend account. To send to any address:
-
-1. Verify your domain in the Resend dashboard
-2. Update the `from` field in `notify-booking/index.ts` and `notify-inquiry/index.ts`
-3. Redeploy both functions
+> `RESEND_API_KEY` is stored exclusively as a Supabase Edge Function secret and is never exposed to the browser or added to Vercel environment variables.
 
 ---
 
-## Deployment (Vercel)
+## Running locally
 
-### 1. Import the project
+```bash
+# 1. Install dependencies
+npm install
 
-Go to [vercel.com](https://vercel.com) → **Add New Project** → import your GitHub repo.
-Set **Root Directory** to `unity-foods` (the folder containing `package.json`).
+# 2. Add environment variables (see above)
+cp .env.example .env   # then fill in your values
 
-### 2. Build settings
+# 3. Start the dev server
+npm run dev
+```
 
-| Setting | Value |
-|---|---|
-| Framework Preset | Vite |
-| Build Command | `npm run build` |
-| Output Directory | `dist` |
+The site runs at `http://localhost:5173` by default.
 
-### 3. Environment variables
+---
 
-Add these in **Settings → Environment Variables** (Production + Preview + Development):
+## Deployment
+
+### Vercel
+
+1. Go to [vercel.com](https://vercel.com) → **Add New Project** → import the GitHub repo
+2. Set **Root Directory** to `unity-foods` (the folder containing `package.json`)
+3. Vercel auto-detects Vite — build command `npm run build`, output directory `dist`
+4. Add environment variables under **Settings → Environment Variables**:
 
 | Variable | Where to find it |
 |---|---|
 | `VITE_SUPABASE_URL` | Supabase → Settings → API → Project URL |
 | `VITE_SUPABASE_ANON_KEY` | Supabase → Settings → API → anon / public key |
 
-`RESEND_API_KEY` is a Supabase secret only — do not add it to Vercel.
-
-### 4. Client-side routing
-
-`vercel.json` (already in the repo) handles this:
+The `vercel.json` in the repo configures SPA rewrites so refreshing any route returns the app instead of a 404:
 
 ```json
 {
@@ -415,7 +302,38 @@ Add these in **Settings → Environment Variables** (Production + Preview + Deve
 }
 ```
 
-Without this, refreshing any route other than `/` would return a 404 from Vercel's CDN.
+### Custom domain
+
+1. In the Vercel project → **Settings → Domains** → add `unityfoodsmn.com`
+2. Follow the DNS instructions to point your domain to Vercel
+3. Vercel automatically provisions an SSL certificate
+
+---
+
+## Email notifications
+
+Two Supabase Edge Functions send HTML email via [Resend](https://resend.com) whenever a customer submits a booking or product inquiry.
+
+| Function | Trigger |
+|---|---|
+| `notify-booking` | Customer submits a repair booking on `/repairs` |
+| `notify-inquiry` | Customer submits a product inquiry on `/electronics` |
+
+Emails are sent from `Unity Foods <bookings@unityfoodsmn.com>` to the `owner_email` address configured in the admin settings.
+
+### Deploy
+
+```bash
+cd unity-foods
+npx supabase functions deploy notify-booking --project-ref prblfpgnwvrzafhovdkj
+npx supabase functions deploy notify-inquiry --project-ref prblfpgnwvrzafhovdkj
+```
+
+### Set the Resend API key
+
+```bash
+npx supabase secrets set RESEND_API_KEY=re_xxxxxxxxxxxx --project-ref prblfpgnwvrzafhovdkj
+```
 
 ---
 
@@ -423,18 +341,6 @@ Without this, refreshing any route other than `/` would return a 404 from Vercel
 
 1. Go to **Supabase → Authentication → Users → Add user**
 2. Create an account with your email and a strong password
-3. Log in at `https://your-site.vercel.app/admin/login`
+3. Log in at `https://unityfoodsmn.com/admin/login`
 
-There is no public sign-up. The admin panel is invitation-only through Supabase Auth.
-
----
-
-## Color scheme
-
-| CSS variable | Value | Usage |
-|---|---|---|
-| `--primary` | `#8B0000` | Buttons, active states, primary accents |
-| `--accent` | `#CC0000` | Hover states, sale badges, highlights |
-| `--nav-bg` | `#111111` | Navbar, footer, dark section backgrounds |
-| `--bg` | `#fafaf8` | Page background |
-| `--white` | `#ffffff` | Cards, panels, surfaces |
+There is no public sign-up. The admin panel is accessible only through accounts created directly in Supabase Auth.

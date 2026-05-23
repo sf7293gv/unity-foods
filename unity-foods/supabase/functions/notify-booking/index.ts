@@ -14,6 +14,8 @@ Deno.serve(async (req) => {
     const { customer_name, customer_phone, service_name, booking_date, booking_time, notes } =
       await req.json()
 
+    console.log('[notify-booking] Received payload — customer:', customer_name, '| service:', service_name, '| date:', booking_date, '| time:', booking_time)
+
     // ── Fetch owner_email via service role ──────────────────
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
@@ -53,6 +55,10 @@ Deno.serve(async (req) => {
     const dateDisplay = formatDate(booking_date)
     const timeDisplay = format12h(booking_time)
 
+    const fromField = 'Unity Foods <bookings@unityfoodsmn.com>'
+    const subjectField = `New Repair Booking — ${customer_name}`
+    console.log('[notify-booking] Sending email — from:', fromField, '| to:', ownerEmail, '| subject:', subjectField)
+
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -60,9 +66,9 @@ Deno.serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Unity Foods <bookings@unityfoodsmn.com>',
+        from: fromField,
         to: [ownerEmail],
-        subject: `New Repair Booking — ${customer_name}`,
+        subject: subjectField,
         html: buildEmail({ customer_name, customer_phone, service_name, dateDisplay, timeDisplay, notes }),
       }),
     })
@@ -75,11 +81,11 @@ Deno.serve(async (req) => {
       resendBody = await resendRes.text()
     }
 
+    console.log('[notify-booking] Resend HTTP status:', resendRes.status)
+    console.log('[notify-booking] Resend response body:', JSON.stringify(resendBody))
+
     if (!resendRes.ok) {
-      // Resend returns errors like:
-      //   { "name": "validation_error", "message": "You can only send testing emails to your own email address (you@example.com)." }
-      // This appears in Supabase Edge Function logs: supabase functions logs notify-booking
-      console.error(`[notify-booking] Resend ${resendRes.status}:`, JSON.stringify(resendBody))
+      console.error(`[notify-booking] Resend error ${resendRes.status}:`, JSON.stringify(resendBody))
       return new Response(
         JSON.stringify({ error: 'Email send failed', status: resendRes.status, detail: resendBody }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

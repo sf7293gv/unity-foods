@@ -1,3 +1,4 @@
+// Root router — declares all public and admin routes; admin subtree is guarded by ProtectedRoute.
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'

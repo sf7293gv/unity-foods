@@ -1,3 +1,4 @@
+// Menu page — fetches active menu items from Supabase and renders a filterable grid by category.
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'

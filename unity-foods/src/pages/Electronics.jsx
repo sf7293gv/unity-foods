@@ -1,3 +1,5 @@
+// Electronics page — fetches active products from Supabase, filterable by category and condition.
+// Products without a price show "Call for Quote". Inquiry modal fires the notify-inquiry Edge Function.
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useFadeIn } from '../hooks/useScrollAnimation'

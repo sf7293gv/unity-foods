@@ -1,3 +1,4 @@
+// Site footer — fetches social media URLs from the settings table so the admin can update them without a redeploy.
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'

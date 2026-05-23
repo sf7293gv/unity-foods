@@ -1,3 +1,4 @@
+// Admin dashboard — summary counts for bookings, inquiries, menu items, and specials.
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'

@@ -1,3 +1,5 @@
+// Home page — fetches announcements, weekly specials, and store hours from Supabase
+// to display a hero, live specials grid, quick-info cards, and a per-day hours table.
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'

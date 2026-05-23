@@ -1,3 +1,5 @@
+// Tobacco products CRUD — create/edit/delete tobacco items with name and image only; no price column.
+// Images are uploaded to the tobacco/ path in the images Storage bucket.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminModal from './AdminModal'

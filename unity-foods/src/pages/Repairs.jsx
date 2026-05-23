@@ -1,3 +1,6 @@
+// Repairs page — lists active repair services, a before/after media gallery, and a booking form.
+// Time slots are fixed 1:00 PM–9:45 PM in 15-min intervals; closed days return no slots.
+// The #booking hash scrolls to the form with an 80ms delay so Layout's scroll-to-top resolves first.
 import { useState, useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { supabase } from '../lib/supabase'

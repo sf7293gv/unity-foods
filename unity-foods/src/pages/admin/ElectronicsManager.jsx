@@ -1,3 +1,5 @@
+// Electronics products CRUD — create/edit/delete products with name, category, condition,
+// optional price ("Call for Quote" if blank), description, image, and active toggle.
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import AdminModal from './AdminModal'
